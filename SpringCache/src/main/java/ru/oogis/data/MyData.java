@@ -20,7 +20,7 @@ public class MyData {
         users.put(5L, "5");
     }
 
-    @CachePut(value = "name", key = "#id")
+    @CachePut(cacheNames = "myCach", key = "#id")
     public String update(Long id, String name) {
         System.out.println("update = " + id + " //// " + name);
         users.put(id, name);
@@ -42,7 +42,7 @@ public class MyData {
             }
     )
  */
-    @CacheEvict(value = "name")
+    @CacheEvict(cacheNames = "myCach")
     public void delete(Long id) {
         System.out.println("delete , id = " + id);
         users.remove(id);
@@ -53,7 +53,7 @@ public class MyData {
         return users;
     }
 
-    @Cacheable(value = "name")
+    @Cacheable(cacheNames = "myCach")
     public String getName(Long id) {
         System.out.println("get Name  ; id = " + id);
         return users.get(id);

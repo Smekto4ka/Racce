@@ -23,7 +23,7 @@ public class MyStart {
 
     @Bean
     public CacheManager cacheManager(){
-        return new ConcurrentMapCacheManager(){
+        return new ConcurrentMapCacheManager("myCach"){
             @Override
             protected Cache createConcurrentMapCache(String name) {
                 return new ConcurrentMapCache(
