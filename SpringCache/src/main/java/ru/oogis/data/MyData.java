@@ -1,5 +1,8 @@
 package ru.oogis.data;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -17,11 +20,29 @@ public class MyData {
         users.put(5L, "5");
     }
 
-    public void update(Long id, String name) {
+    @CachePut(value = "name", key = "#id")
+    public String update(Long id, String name) {
         System.out.println("update = " + id + " //// " + name);
         users.put(id, name);
+        return name;
     }
-
+/*
+    @Caching(
+            cacheable = {
+                    @Cacheable("users"),
+                    @Cacheable("contacts")
+            },
+            put = {
+                    @CachePut("tables"),
+                    @CachePut("chairs"),
+                    @CachePut(value = "meals", key = "#user.email")
+            },
+            evict = {
+                    @CacheEvict(value = "services", key = "#user.name")
+            }
+    )
+ */
+    @CacheEvict(value = "name")
     public void delete(Long id) {
         System.out.println("delete , id = " + id);
         users.remove(id);
@@ -32,6 +53,7 @@ public class MyData {
         return users;
     }
 
+    @Cacheable(value = "name")
     public String getName(Long id) {
         System.out.println("get Name  ; id = " + id);
         return users.get(id);
