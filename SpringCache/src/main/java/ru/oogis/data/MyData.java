@@ -3,6 +3,7 @@ package ru.oogis.data;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -20,34 +21,45 @@ public class MyData {
         users.put(5L, "5");
     }
 
-    @CachePut(cacheNames = "myCach", key = "#id")
+    @Caching(
+            put = {
+                  //  @CachePut(cacheNames = "myCach", key = "'sss'"),
+                    @CachePut(cacheNames = "myCach", key = "#id")
+            },
+            evict = {
+                    @CacheEvict(value = "myCach", key = "'sss'")
+            }
+    )
+
     public String update(Long id, String name) {
         System.out.println("update = " + id + " //// " + name);
         users.put(id, name);
         return name;
     }
-/*
-    @Caching(
-            cacheable = {
-                    @Cacheable("users"),
-                    @Cacheable("contacts")
-            },
-            put = {
-                    @CachePut("tables"),
-                    @CachePut("chairs"),
-                    @CachePut(value = "meals", key = "#user.email")
-            },
-            evict = {
-                    @CacheEvict(value = "services", key = "#user.name")
-            }
-    )
- */
+
+    /*
+        @Caching(
+                cacheable = {
+                        @Cacheable("users"),
+                        @Cacheable("contacts")
+                },
+                put = {
+                        @CachePut("tables"),
+                        @CachePut("chairs"),
+                        @CachePut(value = "meals", key = "#user.email")
+                },
+                evict = {
+                        @CacheEvict(value = "services", key = "#user.name")
+                }
+        )
+     */
     @CacheEvict(cacheNames = "myCach")
     public void delete(Long id) {
         System.out.println("delete , id = " + id);
         users.remove(id);
     }
 
+    @Cacheable(cacheNames = "myCach" , key = "'sss'")
     public Map<Long, String> getAll() {
         System.out.println("getAll");
         return users;
