@@ -14,11 +14,11 @@ import ru.xpendence.kafkaserver.service.StarshipService;
  * Time: 19:02
  * e-mail: vyacheslav.chernyshov@stoloto.ru
  */
-@RestController
-@RequestMapping("/starship")
+//@RestController
+//@RequestMapping("/starship")
 public class StarshipController {
 
-    private final StarshipService service;
+/*    private final StarshipService service;
 
     @Autowired
     public StarshipController(StarshipService service) {
@@ -28,5 +28,5 @@ public class StarshipController {
     @PostMapping
     public void send(@RequestBody StarshipDto dto) {
         service.send(dto);
-    }
+    }*/
 }

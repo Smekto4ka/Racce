@@ -2,6 +2,7 @@ package ru.xpendence.kafkaserver.config;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.protocol.types.Field;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class KafkaConsumerConfig {
     }*/
 
     @Bean("kafkaListenerContainerFactory")
-    @ConditionalOnMissingBean(name = "kafkaListenerContainerFactory")
+    @ConditionalOnMissingBean(name = "consumerFactoryAbstractDto")
     public KafkaListenerContainerFactory<?> singleFactory() {
         ConcurrentKafkaListenerContainerFactory<Long, AbstractDto> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
@@ -63,9 +64,22 @@ public class KafkaConsumerConfig {
         factory.setMessageConverter(new StringJsonMessageConverter());
         return factory;
     }
-
-    @Bean("consumerFactory")
+    @Bean("stringFactory")
+    @ConditionalOnMissingBean(name = "consumerFactoryString")
+    public KafkaListenerContainerFactory<?> stringFactory() {
+        ConcurrentKafkaListenerContainerFactory<Long, String> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactoryString());
+        factory.setBatchListener(false);
+        factory.setMessageConverter(new StringJsonMessageConverter());
+        return factory;
+    }
+    @Bean("consumerFactoryAbstractDto")
     public ConsumerFactory<Long, AbstractDto> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(consumerConfigs());
+    }
+    @Bean("consumerFactoryString")
+    public ConsumerFactory<Long, String> consumerFactoryString() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
 

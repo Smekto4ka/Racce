@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="car-client" />
+        <module name="car-model" />
+        <module name="car" />
+        <module name="kafka-request-reply-util" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="car" target="1.8" />
+      <module name="car-client" target="1.8" />
+      <module name="car-model" target="1.8" />
+      <module name="kafka-request-reply-util" target="1.8" />
+      <module name="synch_kafka" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="car" options="-parameters" />
+      <module name="car-client" options="-parameters" />
+    </option>
+  </component>
+</project>

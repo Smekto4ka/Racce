@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,15 @@ import java.time.LocalTime;
 public class StarshipServiceImpl implements StarshipService {
 
     private final KafkaTemplate<Long, StarshipDto> kafkaStarshipTemplate;
+    private final KafkaTemplate<Long, String> kafkaStringTemplate;
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public StarshipServiceImpl(KafkaTemplate<Long, StarshipDto> kafkaStarshipTemplate,
+    public StarshipServiceImpl(@Qualifier("kafkaTemplate") KafkaTemplate kafkaStarshipTemplate,
+                               @Qualifier("kafkaTemplateString") KafkaTemplate kafkaStringTemplate,
                                ObjectMapper objectMapper) {
         this.kafkaStarshipTemplate = kafkaStarshipTemplate;
+        this.kafkaStringTemplate = kafkaStringTemplate;
         this.objectMapper = objectMapper;
     }
 
@@ -36,6 +40,12 @@ public class StarshipServiceImpl implements StarshipService {
         StarshipDto dto = createDto();
         log.info("<= sending {}", writeValueAsString(dto));
         kafkaStarshipTemplate.send("test", dto);
+    }
+
+    @Scheduled(initialDelay = 15000, fixedDelay = 5000)
+    public void produceString() {
+
+        kafkaStringTemplate.send("text",String.valueOf(LocalTime.now().toNanoOfDay() / 1000000) );
     }
 
     private StarshipDto createDto() {

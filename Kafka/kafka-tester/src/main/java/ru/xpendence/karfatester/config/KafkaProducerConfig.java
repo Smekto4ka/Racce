@@ -45,8 +45,15 @@ public class KafkaProducerConfig {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
-    @Bean
+    @Bean("kafkaTemplate")
     public KafkaTemplate<Long, StarshipDto> kafkaTemplate() {
+        KafkaTemplate<Long, StarshipDto> template = new KafkaTemplate<>(producerStarshipFactory());
+        template.setMessageConverter(new StringJsonMessageConverter());
+        return template;
+    }
+
+    @Bean("kafkaTemplateString")
+    public KafkaTemplate<Long, StarshipDto> kafkaTemplateString() {
         KafkaTemplate<Long, StarshipDto> template = new KafkaTemplate<>(producerStarshipFactory());
         template.setMessageConverter(new StringJsonMessageConverter());
         return template;
