@@ -1,0 +1,19 @@
+
+Синхронный Запрос-Ответ с использованием Apache Kafka
+https://habr.com/ru/post/476156/
+
+5 вещей, о которых должен знать любой разработчик Apache Kafka
+https://habr.com/ru/company/southbridge/blog/547264/
+
+пару команд для консоли 
+https://kafka.apache.org/quickstart
+
+шпаргалки
+https://medium.com/@poslegm/%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0-%D0%BF%D0%BE-%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC-%D0%BA%D0%B0%D1%84%D0%BA%D0%B8-75761ba7dae8
+
+Apache Kafka: основы технологии
+https://habr.com/ru/company/southbridge/blog/550934/
+
+
+Apache Kafka + Spring Boot: Hello, microservices
+https://habr.com/ru/post/440400/
