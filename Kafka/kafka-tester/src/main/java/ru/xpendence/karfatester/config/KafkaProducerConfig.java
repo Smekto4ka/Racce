@@ -1,11 +1,16 @@
 package ru.xpendence.karfatester.config;
 
+import org.apache.kafka.clients.admin.AdminClientConfig;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
@@ -29,6 +34,8 @@ public class KafkaProducerConfig {
 
     @Value("${kafka.producer.id}")
     private String kafkaProducerId;
+    @Value("${kafka.topic.name}")
+    private String nameTopic;
 
     @Bean
     public Map<String, Object> producerConfigs() {
@@ -57,5 +64,22 @@ public class KafkaProducerConfig {
         KafkaTemplate<Long, StarshipDto> template = new KafkaTemplate<>(producerStarshipFactory());
         template.setMessageConverter(new StringJsonMessageConverter());
         return template;
+    }
+
+    @Bean
+    public KafkaAdmin admin() {
+        Map<String, Object> configs = new HashMap<>();
+        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer);
+        return new KafkaAdmin(configs);
+    }
+
+
+    @Bean
+    public NewTopic topic1() {
+        return TopicBuilder.name(nameTopic)
+                .partitions(3)
+                .replicas(1)
+                .compact()
+                .build();
     }
 }

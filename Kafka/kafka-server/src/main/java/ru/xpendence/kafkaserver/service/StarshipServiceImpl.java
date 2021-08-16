@@ -55,13 +55,13 @@ public class StarshipServiceImpl implements StarshipService {
     }
 
     @Override
-    @KafkaListener(id = "Starship", topics = {"test"}, containerFactory = "kafkaListenerContainerFactory")
+   // @KafkaListener(id = "Starship", topics = {"test"}, containerFactory = "kafkaListenerContainerFactory")
     public void consume(StarshipDto dto) {
         log.info("=> consumed {}", writeValueAsString(dto));
     }
 
 
-    @KafkaListener(id = "ddd", topics = {"text"}, containerFactory = "stringFactory")
+  //  @KafkaListener(id = "ddd", topics = {"text"}, containerFactory = "stringFactory")
     public void consumeString(String dto) {
         log.info("=> consumed {}" + dto);
     }
