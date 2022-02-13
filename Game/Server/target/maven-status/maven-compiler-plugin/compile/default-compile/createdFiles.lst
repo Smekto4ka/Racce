@@ -1,0 +1,8 @@
+love\smekto4ka\GameLoop.class
+love\smekto4ka\config\AppConfig.class
+love\smekto4ka\ws\ConnectListener.class
+love\smekto4ka\ServerStart.class
+love\smekto4ka\ws\MessagesListener.class
+love\smekto4ka\ws\DisconnectListener.class
+love\smekto4ka\ws\WebSocketHandler.class
+love\smekto4ka\config\WebSocketConfig.class
