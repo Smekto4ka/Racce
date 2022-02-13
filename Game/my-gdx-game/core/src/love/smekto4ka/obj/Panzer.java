@@ -1,4 +1,4 @@
-package love.smekto4ka;
+package love.smekto4ka.obj;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,6 +12,7 @@ public class Panzer {
     private final Vector2 position = new Vector2();
     private final Texture texture;
     private final Vector2 angle = new Vector2();
+    private final Vector2 origin = new Vector2();
     private final TextureRegion textureRegion;
 
     public Panzer(float x, float y) {
@@ -23,6 +24,7 @@ public class Panzer {
         this.texture = new Texture(textureName);
         textureRegion = new TextureRegion(texture);
         position.set(x, y);
+        origin.set(position).add(halfSize , halfSize);
     }
 
     public void render(SpriteBatch batch) {
@@ -45,13 +47,18 @@ public class Panzer {
 
     public void moveTo(Vector2 direction) {
         position.add(direction);
+        origin.set(position).add(halfSize, halfSize);
     }
 
     public void rotateTo(Vector2 mousePosition) {
-        angle.set(mousePosition).sub(position.x + halfSize, position.y + halfSize); // так как надо учитывать , что координаты объекта идут от его нижнего левого угла, а нам нужен его центр
+        angle.set(mousePosition).sub(origin); // так как надо учитывать , что координаты объекта идут от его нижнего левого угла, а нам нужен его центр
     }
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    public Vector2 getOrigin() {
+        return origin;
     }
 }
