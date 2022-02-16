@@ -71,7 +71,7 @@ public class HtmlLauncher extends GwtApplication {
             @Override
             public void callEvent(WsEvent wsEvent) {
                 if (!once.get()) {
-                    webSocket.send("hello");
+                  //  webSocket.send("hello");
                     once.set(true);
                 }
                 log(wsEvent.getData());

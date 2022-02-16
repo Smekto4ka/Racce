@@ -1,8 +1,8 @@
 package love.smekto4ka.ws;
 
-import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.sockjs.transport.session.WebSocketServerSockJsSession;
+import com.badlogic.gdx.utils.JsonValue;
+import org.springframework.web.socket.adapter.standard.StandardWebSocketSession;
 
 public interface MessagesListener {
-    void handle(WebSocketSession session, String message);
+    void handle(StandardWebSocketSession session, JsonValue message);
 }
